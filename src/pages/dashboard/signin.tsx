@@ -8,10 +8,10 @@ import { useRouter } from "next/router";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
 
 const SignIn: NextPage = () => {
-  const { data: sessionData,status } = useSession();
+  const { data: sessionData, status } = useSession();
   const router = useRouter();
-  if(status==="authenticated"){
-    void router.push("/")
+  if (status === "authenticated") {
+    void router.push("/");
   }
   const [userInfo, setUserInfo] = useState({ userName: "", password: "" });
   const [error, setError] = useState(false);
@@ -22,21 +22,28 @@ const SignIn: NextPage = () => {
       password: userInfo.password,
       redirect: false,
     });
-    void toast.promise(res, {
-      loading: "Loading",
-      success: "Signed in successfully",
-      error: () => {
-        setError(true);
-        return "Incorrect Username or Password";
+    void toast.promise(
+      res,
+      {
+        loading: "Loading",
+        success: (res) => {
+          if (res?.error) {
+            setError(true);
+            return "Incorrect Username or Password";
+          }
+          return "Signed in successfully";
+        },
+        error: "Something went wrong",
       },
-    },{
-      style: {
-        minWidth: "250px",
-      },
-      success: {
-        duration: 2000,
-      },
-    });
+      {
+        style: {
+          minWidth: "250px",
+        },
+        success: {
+          duration: 3000,
+        },
+      }
+    );
   };
   const [errorParent] = useAutoAnimate<HTMLDivElement>();
   return (
@@ -75,10 +82,10 @@ const SignIn: NextPage = () => {
               <h2 className="mt-6 text-2xl font-bold text-white sm:text-3xl md:text-4xl">
                 Welcome to Squid 🦑
               </h2>
-              {sessionData?.user &&(
-              <h2 className="mt-6 text-2xl font-bold text-white sm:text-3xl md:text-4xl">
-                {sessionData.user.name}
-              </h2>
+              {sessionData?.user && (
+                <h2 className="mt-6 text-2xl font-bold text-white sm:text-3xl md:text-4xl">
+                  {sessionData.user.name}
+                </h2>
               )}
               <p className="mt-4 leading-relaxed text-white/90">
                 Lorem, ipsum dolor sit amet consectetur adipisicing elit.
@@ -146,7 +153,10 @@ const SignIn: NextPage = () => {
                 </div>
 
                 <div className="col-span-6 sm:flex sm:items-center sm:gap-4">
-                  <button type="submit" className="inline-block shrink-0 rounded-md border border-blue-600 bg-blue-600 px-12 py-3 text-sm font-medium text-white transition hover:bg-transparent hover:text-blue-600 focus:outline-none focus:ring active:text-blue-500 dark:hover:bg-blue-700 dark:hover:text-white">
+                  <button
+                    type="submit"
+                    className="inline-block shrink-0 rounded-md border border-blue-600 bg-blue-600 px-12 py-3 text-sm font-medium text-white transition hover:bg-transparent hover:text-blue-600 focus:outline-none focus:ring active:text-blue-500 dark:hover:bg-blue-700 dark:hover:text-white"
+                  >
                     Log in
                   </button>
                 </div>

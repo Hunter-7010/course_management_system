@@ -17,8 +17,8 @@ import RoleListBox from "~/components/roleListBox";
 const SignOut: NextPage = () => {
   const { status } = useSession();
   const router = useRouter();
-  if (status === "authenticated") {
-    void router.push("/");
+  if (status === "unauthenticated") {
+    void router.push("/dashboard/signin");
   }
   const userFormSchema = z.object({
     username: z
@@ -34,7 +34,6 @@ const SignOut: NextPage = () => {
     register,
     handleSubmit,
     setValue,
-    watch,
     formState: { errors },
   } = useForm<userFormSchemaType>({
     resolver: zodResolver(userFormSchema),
@@ -199,7 +198,7 @@ const SignOut: NextPage = () => {
             </div>
           </main>
         </div>
-        <pre>{JSON.stringify(watch(), null, 2)}</pre>
+        {/* <pre>{JSON.stringify(watch(), null, 2)}</pre> */}
       </section>
     </>
   );
