@@ -7,30 +7,59 @@ import { toast } from "react-hot-toast";
 import { useRouter } from "next/router";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
 
+import {  z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm, SubmitHandler } from "react-hook-form";
+
 import { api } from "~/utils/api";
 
+import RoleListBox from "~/components/roleListBox";
+
 const SignOut: NextPage = () => {
-  const { data: sessionData } = useSession();
-  const router = useRouter();
-  const [userInfo, setUserInfo] = useState({ userName: "", password: "" });
-  const [error, setError] = useState(false);
-  const handleSubmit: React.FormEventHandler<HTMLFormElement> = async (e) => {
-    e.preventDefault();
-    const res = signIn("credentials", {
-      userName: userInfo.userName,
-      password: userInfo.password,
-      redirect: false,
-    });
-    toast.promise(res, {
+  const userFormSchema = z.object({
+    username: z
+      .string()
+      .min(1, { message: "Must be 1 or more characters long!" }),
+    password: z
+      .string()
+      .min(1, { message: "Must be 1 or more characters long!" }),
+    role: z.string(),
+  });
+  type userFormSchemaType = z.infer<typeof userFormSchema>;
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    watch,
+    formState: { errors },
+  } = useForm<userFormSchemaType>({
+    resolver: zodResolver(userFormSchema),
+  });
+  const { mutateAsync: savingUser } = api.auth.registerUser.useMutation({
+    onSuccess: () => {
+      return "";
+    },
+  });
+  const formSubmitHandler: SubmitHandler<userFormSchemaType> = (data) => {
+    void toast.promise(savingUser(data), {
       loading: "Loading",
-      success: "Got the data",
-      error: () => {
-        setError(true);
-        return "Incorrect Username or Password";
+      success: () => {
+        setValue("password", "");
+        setValue("username", "");
+        setValue("role", "");
+        return "Got the data";
       },
+      error: "Incorrect Username or Password",
     });
   };
-  const [errorParent] = useAutoAnimate<HTMLDivElement>();
+
+  const onOptionClick = (role: string) => {
+    setValue("role", role);
+  };
+  console.log(errors)
+  // errors animation
+  const [usernameErrorParent] = useAutoAnimate<HTMLDivElement>();
+  const [passwordErrorParent] = useAutoAnimate<HTMLDivElement>();
   return (
     <>
       <Head>
@@ -44,7 +73,7 @@ const SignOut: NextPage = () => {
           <section className="relative flex h-80 items-end bg-gray-900 lg:col-span-5 lg:h-full xl:col-span-6">
             <img
               alt="Night"
-              src="https://images.unsplash.com/photo-1617195737496-bc30194e3a19?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80"
+              src="https://images.unsplash.com/photo-1605106702734-205df224ecce?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80"
               className="absolute inset-0 h-full w-full object-cover opacity-80"
             />
 
@@ -84,10 +113,10 @@ const SignOut: NextPage = () => {
                 Sign In
               </h1>
               <form
-                onSubmit={handleSubmit}
+                onSubmit={handleSubmit(formSubmitHandler)}
                 className="mt-8 grid w-96 grid-cols-6 gap-6"
               >
-                <div className="col-span-6">
+                <div ref={usernameErrorParent} className="col-span-6">
                   <label
                     htmlFor="username"
                     className="block text-sm font-medium text-gray-700 dark:text-gray-200"
@@ -98,16 +127,18 @@ const SignOut: NextPage = () => {
                   <input
                     type="text"
                     id="username"
-                    name="username"
                     placeholder="UserName"
-                    value={userInfo.userName}
-                    onChange={({ target }) => {
-                      setUserInfo({ ...userInfo, userName: target.value });
-                    }}
+                    {...register("username")}
                     className="mt-1 w-full rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200"
                   />
+                  {errors.username && (
+                    <p className="test-sm mt-1 text-red-600">
+                      {" "}
+                      {errors.username.message}
+                    </p>
+                  )}
                 </div>
-                <div ref={errorParent} className="col-span-6">
+                <div ref={passwordErrorParent} className="col-span-6">
                   <label
                     htmlFor="password"
                     className="block text-sm font-medium text-gray-700 dark:text-gray-200"
@@ -118,30 +149,45 @@ const SignOut: NextPage = () => {
                   <input
                     type="password"
                     id="password"
-                    name="password"
-                    value={userInfo.password}
-                    onChange={({ target }) => {
-                      setUserInfo({ ...userInfo, password: target.value });
-                    }}
+                    placeholder="Password"
+                    {...register("password")}
                     className="mt-1 w-full rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200"
                   />
-                  {error && (
-                    <p className="mt-1 text-xs text-red-600">
+                  {errors.password && (
+                    <p className="test-sm mt-1 text-red-600">
                       {" "}
-                      Incorrect Username or Password
+                      {errors.password.message}
+                    </p>
+                  )}
+                </div>
+
+                <div className="col-span-6">
+                  <label htmlFor="role" className="sr-only">
+                    Role
+                  </label>
+                  <input id="role" type="hidden" {...register("role")} />
+                  <RoleListBox onOptionClick={onOptionClick} />
+                  {errors.role && (
+                    <p className="test-sm mt-1 text-red-600">
+                      {" "}
+                      {errors.role.message}
                     </p>
                   )}
                 </div>
 
                 <div className="col-span-6 sm:flex sm:items-center sm:gap-4">
-                  <button type="submit" className="inline-block shrink-0 rounded-md border border-blue-600 bg-blue-600 px-12 py-3 text-sm font-medium text-white transition hover:bg-transparent hover:text-blue-600 focus:outline-none focus:ring active:text-blue-500 dark:hover:bg-blue-700 dark:hover:text-white">
-                    Log in
+                  <button
+                    type="submit"
+                    className="inline-block shrink-0 rounded-md border border-blue-600 bg-blue-600 px-12 py-3 text-sm font-medium text-white transition hover:bg-transparent hover:text-blue-600 focus:outline-none focus:ring active:text-blue-500 dark:hover:bg-blue-700 dark:hover:text-white"
+                  >
+                    Register User
                   </button>
                 </div>
               </form>
             </div>
           </main>
         </div>
+        <pre>{JSON.stringify(watch(), null, 2)}</pre>
       </section>
     </>
   );

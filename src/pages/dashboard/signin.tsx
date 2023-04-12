@@ -21,7 +21,7 @@ const SignIn: NextPage = () => {
       password: userInfo.password,
       redirect: false,
     });
-    toast.promise(res, {
+    void toast.promise(res, {
       loading: "Loading",
       success: "Got the data",
       error: () => {
@@ -67,7 +67,12 @@ const SignIn: NextPage = () => {
               <h2 className="mt-6 text-2xl font-bold text-white sm:text-3xl md:text-4xl">
                 Welcome to Squid 🦑
               </h2>
+              {sessionData?.user &&(
+              <h2 className="mt-6 text-2xl font-bold text-white sm:text-3xl md:text-4xl">
+                {sessionData.user.name}
+              </h2>
 
+              )}
               <p className="mt-4 leading-relaxed text-white/90">
                 Lorem, ipsum dolor sit amet consectetur adipisicing elit.
                 Eligendi nam dolorum aliquam, quibusdam aperiam voluptatum.
@@ -118,7 +123,7 @@ const SignIn: NextPage = () => {
                   <input
                     type="password"
                     id="password"
-                    name="password"
+                    placeholder="Password"
                     value={userInfo.password}
                     onChange={({ target }) => {
                       setUserInfo({ ...userInfo, password: target.value });

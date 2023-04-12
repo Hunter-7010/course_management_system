@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-import { createTRPCRouter, protectedProcedure } from "~/server/api/trpc";
+import { createTRPCRouter, protectedProcedure,publicProcedure } from "~/server/api/trpc";
 import bcrypt from "bcryptjs";
 import { TRPCError } from "@trpc/server";
 
@@ -11,7 +11,7 @@ export const authRouter = createTRPCRouter({
   getSecretMessage: protectedProcedure.query(() => {
     return "You are logged in and can see this secret message!";
   }),
-  registerUser: protectedProcedure
+  registerUser: publicProcedure
     .input(
       z.object({
         username: z.string(),
