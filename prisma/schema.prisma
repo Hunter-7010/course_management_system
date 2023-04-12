@@ -18,17 +18,27 @@ model User {
 }
 
 model Courses {
-  id               String   @id @default(auto()) @map("_id") @db.ObjectId
-  title            String
-  description      String?  @default("")
-  price            Float?
-  image            String   @default("")
-  type             String?  @default("")
-  isNew            Boolean? @default(false)
-  isForSale        Boolean? @default(false)
-  categories       String?  @default("")
-  activity         String[]
-  discriptionArray Json
-  createdAt        DateTime @default(now())
-  updatedAt        DateTime @updatedAt
+  id           String   @id @default(auto()) @map("_id") @db.ObjectId
+  title        String
+  header       String
+  description  Json[]
+  price        Float?
+  image        String   @default("")
+  language     String
+  type         String?  @default("")
+  isNew        Boolean? @default(false)
+  isForSale    Boolean? @default(false)
+  categories   String?  @default("")
+  activity     String[]
+  thingToLearn String[]
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
 }
+
+// model Section {
+//   id           String   @id @default(auto()) @map("_id") @db.ObjectId
+//   h1           String?
+//   paragraph    String?
+//   courseId     String  @db.ObjectId
+//   description  Courses  @relation(fields: [courseId], references: [id])
+// }
