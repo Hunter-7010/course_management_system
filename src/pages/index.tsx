@@ -7,7 +7,6 @@ import { api } from "~/utils/api";
 
 const Home: NextPage = () => {
   const { data: sessionData, status } = useSession();
- 
   return (
     <>
       <Head>
@@ -31,6 +30,12 @@ const Home: NextPage = () => {
               href="/dashboard"
             >
               <h3 className="text-2xl font-bold">Dashboard</h3>
+            </Link>
+            <Link
+              className="flex max-w-xs flex-col gap-4 rounded-xl bg-white/10 p-4 text-white hover:bg-white/20"
+              href="/dashboard/register"
+            >
+              <h3 className="text-2xl font-bold">Register</h3>
             </Link>
           </div>
           <div className="flex flex-col items-center gap-2">

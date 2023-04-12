@@ -1,8 +1,7 @@
 import { type NextPage } from "next";
 import Head from "next/head";
 import Link from "next/link";
-import { signIn, signOut, useSession } from "next-auth/react";
-import { useState } from "react";
+import {useSession } from "next-auth/react";
 import { toast } from "react-hot-toast";
 import { useRouter } from "next/router";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
@@ -55,6 +54,13 @@ const SignOut: NextPage = () => {
         return "Got the data";
       },
       error: "Incorrect Username or Password",
+    },{
+      style: {
+        minWidth: "250px",
+      },
+      success: {
+        duration: 2000,
+      },
     });
   };
 

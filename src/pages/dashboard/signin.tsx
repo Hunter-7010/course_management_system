@@ -24,10 +24,17 @@ const SignIn: NextPage = () => {
     });
     void toast.promise(res, {
       loading: "Loading",
-      success: "Got the data",
+      success: "Signed in successfully",
       error: () => {
         setError(true);
         return "Incorrect Username or Password";
+      },
+    },{
+      style: {
+        minWidth: "250px",
+      },
+      success: {
+        duration: 2000,
       },
     });
   };
