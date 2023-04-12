@@ -7,7 +7,7 @@ import { toast } from "react-hot-toast";
 import { useRouter } from "next/router";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
 
-import {  z } from "zod";
+import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm, SubmitHandler } from "react-hook-form";
 
@@ -16,6 +16,11 @@ import { api } from "~/utils/api";
 import RoleListBox from "~/components/roleListBox";
 
 const SignOut: NextPage = () => {
+  const { status } = useSession();
+  const router = useRouter();
+  if (status === "authenticated") {
+    void router.push("/");
+  }
   const userFormSchema = z.object({
     username: z
       .string()
@@ -56,7 +61,7 @@ const SignOut: NextPage = () => {
   const onOptionClick = (role: string) => {
     setValue("role", role);
   };
-  console.log(errors)
+  console.log(errors);
   // errors animation
   const [usernameErrorParent] = useAutoAnimate<HTMLDivElement>();
   const [passwordErrorParent] = useAutoAnimate<HTMLDivElement>();
@@ -113,6 +118,7 @@ const SignOut: NextPage = () => {
                 Sign In
               </h1>
               <form
+                //   eslint-disable-next-line
                 onSubmit={handleSubmit(formSubmitHandler)}
                 className="mt-8 grid w-96 grid-cols-6 gap-6"
               >

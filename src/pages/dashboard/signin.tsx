@@ -1,20 +1,21 @@
 import { type NextPage } from "next";
 import Head from "next/head";
 import Link from "next/link";
-import { signIn, signOut, useSession } from "next-auth/react";
+import { signIn, useSession } from "next-auth/react";
 import { useState } from "react";
 import { toast } from "react-hot-toast";
 import { useRouter } from "next/router";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
 
-import { api } from "~/utils/api";
-
 const SignIn: NextPage = () => {
-  const { data: sessionData } = useSession();
+  const { data: sessionData,status } = useSession();
   const router = useRouter();
+  if(status==="authenticated"){
+    void router.push("/")
+  }
   const [userInfo, setUserInfo] = useState({ userName: "", password: "" });
   const [error, setError] = useState(false);
-  const handleSubmit: React.FormEventHandler<HTMLFormElement> = async (e) => {
+  const handleSubmit: React.FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
     const res = signIn("credentials", {
       userName: userInfo.userName,
@@ -71,7 +72,6 @@ const SignIn: NextPage = () => {
               <h2 className="mt-6 text-2xl font-bold text-white sm:text-3xl md:text-4xl">
                 {sessionData.user.name}
               </h2>
-
               )}
               <p className="mt-4 leading-relaxed text-white/90">
                 Lorem, ipsum dolor sit amet consectetur adipisicing elit.
