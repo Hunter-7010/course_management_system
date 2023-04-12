@@ -2,10 +2,18 @@ import { type NextPage } from "next";
 import Head from "next/head";
 import Link from "next/link";
 import { signOut, useSession } from "next-auth/react";
+import { useRouter } from "next/router";
 
 import { api } from "~/utils/api";
 
+import CourseCards from "~/components/courseCards";
+
 const Home: NextPage = () => {
+  const { data: sessionData, status } = useSession();
+  const router = useRouter();
+  if (status === "unauthenticated") {
+    void router.push("/dashboard/signin");
+  }
   return (
     <>
       <Head>
@@ -15,14 +23,45 @@ const Home: NextPage = () => {
       </Head>
       <main className="flex  min-h-screen w-screen overflow-hidden bg-gray-50 bg-gradient-to-b duration-500 dark:bg-gray-900 dark:text-white">
         <div className="hidden shrink-0 grow-0 flex-col overflow-y-auto border-r dark:border-gray-700 lg:flex">
-          <div className="flex h-[86.3px]  items-center justify-center border-b text-4xl font-bold dark:border-gray-700">
+          <div className="flex min-h-[96px] items-center  justify-center border-b px-8 text-2xl font-bold dark:border-gray-700">
             Course Managment
           </div>
           <div className="flex h-[41.2rem] w-full flex-col  text-gray-400 antialiased">
             <h2 className="p-5 text-sm font-semibold tracking-widest">
-              ALL BOARDS
+           
             </h2>
-            <div className="relative space-y-1 overflow-y-auto  pr-6"></div>
+            <div className="relative gap-y-12 overflow-y-auto pr-6">
+              <Link href="/dashboard">
+              <h3
+                className={`flex cursor-pointer mb-3 items-center space-x-5 truncate rounded-r-full py-4 pl-8 font-semibold  hover:text-white ${
+                  router.asPath == "/dashboard"
+                    ? "bg-blue-500 text-white"
+                    : "hover:bg-blue-300"
+                }`}
+              >
+        
+                <p className="max-w-[190px] overflow-hidden truncate">
+                Home
+                </p>
+              </h3>
+
+              </Link>
+              <Link href="/dashboard/register">
+              <h3
+                className={`flex cursor-pointer items-center mb-3 space-x-5 truncate rounded-r-full py-4 pl-8 font-semibold  hover:text-white ${
+                  router.asPath == "/dashboard/register"
+                    ? "bg-blue-500 text-white"
+                    : "hover:bg-blue-300"
+                }`}
+              >
+        
+                <p className="max-w-[190px] overflow-hidden truncate">
+                Register User
+                </p>
+              </h3>
+
+              </Link>
+            </div>
           </div>
         </div>
         <div className="fixed top-3.5 overflow-y-auto lg:hidden">
@@ -55,30 +94,32 @@ const Home: NextPage = () => {
         </div>
 
         <div className="flex grow flex-col overflow-y-auto">
-          <div className="flex h-[96px] items-center justify-between border-b dark:border-gray-700">
+          <div className="flex min-h-[96px] items-center justify-between border-b dark:border-gray-700">
             <h1 className="w-1/2 truncate pl-14 text-2xl font-bold text-gray-900  antialiased dark:text-white md:pl-10">
               {/* {oneBoardData.title} */}
             </h1>
             <div className="flex space-x-4 pr-10">
-              {/* <NewSubTask
-                task={
-                  oneBoardData.tasks as {
-                    id: string;
-                    title: string;
-                    boardId: string;
-                    color: string;
-                    createdAt: Date;
-                    updatedAt: Date;
-                    subTasks: [];
-                  }[]
-                }
-              /> */}
+              <Link href="/dashboard/new">
+                <button className="hidden items-center justify-center rounded-l-full rounded-r-full bg-blue-500 px-6 py-2.5 text-white duration-300 hover:opacity-70 md:flex">
+                  + Add New Task
+                </button>
+                <button className="flex h-10 w-10 items-center justify-center rounded-full bg-blue-500 text-white duration-300 hover:opacity-70 md:hidden">
+                  +
+                </button>
+              </Link>
               <div className="flex items-center justify-center">
                 {/* <BoardOptionsDropdown boardId={boardId} /> */}
               </div>
             </div>
           </div>
-          <div className="flex h-full w-full flex-wrap justify-center gap-x-12 overflow-y-auto px-4 md:justify-start"></div>
+          <div className="flex h-full w-full py-4 flex-wrap justify-center gap-y-4 gap-x-12 overflow-y-auto px-4 md:justify-start">
+          <CourseCards/>
+          <CourseCards/>
+          <CourseCards/>
+          <CourseCards/>
+
+
+          </div>
         </div>
         {/*  ) : isLoadingOneBoard ? (
            <LoadingOneBoard />

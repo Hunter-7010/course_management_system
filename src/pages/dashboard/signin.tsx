@@ -7,11 +7,13 @@ import { toast } from "react-hot-toast";
 import { useRouter } from "next/router";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
 
+import Info from "~/components/svgs/info.svg";
+
 const SignIn: NextPage = () => {
   const { data: sessionData, status } = useSession();
   const router = useRouter();
   if (status === "authenticated") {
-    void router.push("/");
+    void router.push("/dashboard");
   }
   const [userInfo, setUserInfo] = useState({ userName: "", password: "" });
   const [error, setError] = useState(false);
@@ -42,6 +44,7 @@ const SignIn: NextPage = () => {
         success: {
           duration: 3000,
         },
+        icon: <Info />,
       }
     );
   };
