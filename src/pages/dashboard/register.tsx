@@ -9,7 +9,7 @@ import { useAutoAnimate } from "@formkit/auto-animate/react";
 
 import { api } from "~/utils/api";
 
-const SignIn: NextPage = () => {
+const SignOut: NextPage = () => {
   const { data: sessionData } = useSession();
   const router = useRouter();
   const [userInfo, setUserInfo] = useState({ userName: "", password: "" });
@@ -50,7 +50,7 @@ const SignIn: NextPage = () => {
 
             <div className="relative block p-12">
               <Link className="block text-white" href="/">
-                <span className="sr-only">Home</span>
+                <span className="sr-only">SignOut</span>
                 <svg
                   className="h-8 sm:h-10"
                   viewBox="0 0 28 24"
@@ -147,4 +147,4 @@ const SignIn: NextPage = () => {
   );
 };
 
-export default SignIn;
+export default SignOut;
