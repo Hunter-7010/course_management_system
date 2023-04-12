@@ -1,7 +1,7 @@
 import { type NextPage } from "next";
 import Head from "next/head";
 import Link from "next/link";
-import {useSession } from "next-auth/react";
+import { useSession } from "next-auth/react";
 import { toast } from "react-hot-toast";
 import { useRouter } from "next/router";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
@@ -38,35 +38,36 @@ const SignOut: NextPage = () => {
   } = useForm<userFormSchemaType>({
     resolver: zodResolver(userFormSchema),
   });
-  const { mutateAsync: savingUser } = api.auth.registerUser.useMutation({
-    onSuccess: () => {
-      return "";
-    },
-  });
+  const { mutateAsync: savingUser } = api.auth.registerUser.useMutation();
   const formSubmitHandler: SubmitHandler<userFormSchemaType> = (data) => {
-    void toast.promise(savingUser(data), {
-      loading: "Loading",
-      success: () => {
-        setValue("password", "");
-        setValue("username", "");
-        setValue("role", "");
-        return "Got the data";
+    void toast.promise(
+      savingUser(data),
+      {
+        loading: "Loading",
+        success: () => {
+          setValue("password", "");
+          setValue("username", "");
+          setValue("role", "");
+          return "Successfully created the user";
+        },
+        error: () => {
+          return "UserName already exists";
+        },
       },
-      error: "Incorrect Username or Password",
-    },{
-      style: {
-        minWidth: "250px",
-      },
-      success: {
-        duration: 2000,
-      },
-    });
+      {
+        style: {
+          minWidth: "250px",
+        },
+        success: {
+          duration: 2000,
+        },
+      }
+    );
   };
 
   const onOptionClick = (role: string) => {
     setValue("role", role);
   };
-  console.log(errors);
   // errors animation
   const [usernameErrorParent] = useAutoAnimate<HTMLDivElement>();
   const [passwordErrorParent] = useAutoAnimate<HTMLDivElement>();
@@ -120,7 +121,7 @@ const SignOut: NextPage = () => {
           >
             <div className="max-w-xl lg:max-w-3xl">
               <h1 className="mt-6 text-2xl font-bold text-gray-900 dark:text-white sm:text-3xl md:text-4xl">
-                Sign In
+                Register a User
               </h1>
               <form
                 //   eslint-disable-next-line
