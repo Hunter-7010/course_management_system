@@ -111,7 +111,7 @@ const Home: NextPage = () => {
           </div>
           <div className="flex h-full w-full flex-wrap justify-center gap-x-12 gap-y-4 overflow-y-auto px-4 py-4 md:justify-start">
             {coursesData?.map((course) => (
-              <CourseCards course={course} />
+              <CourseCards key={course.id} course={course} />
             ))}
           </div>
         </div>

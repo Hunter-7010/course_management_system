@@ -10,8 +10,8 @@ const Description = ({description}: Props) => {
             Description:
         </h1>
     {(description ||[]).map(
-      (description) => (
-        <div className="mb-4 flex flex-col space-y-6">
+      (description,ind) => (
+        <div key={ind} className="mb-4 flex flex-col space-y-6">
           <h1 className="font-bold text-xl">{description.h1}</h1>
           <p className="text-md block"> {description.paragraph} </p>
         </div>

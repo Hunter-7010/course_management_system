@@ -485,7 +485,7 @@ const AddItems: NextPage = () => {
           <div className="flex w-full justify-end">
             <button
               type="submit"
-              className={`mt-4 inline-flex items-center rounded-lg bg-blue-700 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-blue-800 focus:ring-4 focus:ring-indigo-200 disabled:opacity-50 dark:focus:ring-blue-900 sm:mt-6 ${isSubmitSuccessful &&"cursor-wait"}`}
+              className={`mt-4 inline-flex items-center rounded-lg bg-blue-700 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-blue-800 focus:ring-4 focus:ring-indigo-200 disabled:opacity-50 dark:focus:ring-blue-900 sm:mt-6 ${isSubmitSuccessful?"cursor-wait":""}`}
               disabled={isSubmitSuccessful}
             >
               Add Course
