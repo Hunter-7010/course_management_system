@@ -9,6 +9,7 @@ import { useAutoAnimate } from "@formkit/auto-animate/react";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm, SubmitHandler } from "react-hook-form";
+import UpArrow from "~/components/svgs/upArrow.svg";
 
 import { api } from "~/utils/api";
 
@@ -80,6 +81,7 @@ const SignOut: NextPage = () => {
       </Head>
 
       <section className="bg-white dark:bg-gray-900">
+       
         <div className="lg:grid lg:min-h-screen lg:grid-cols-12">
           <section className="relative flex h-80 items-end bg-gray-900 lg:col-span-5 lg:h-full xl:col-span-6">
             <img
@@ -119,6 +121,7 @@ const SignOut: NextPage = () => {
             aria-label="Main"
             className="flex items-center justify-center px-8 py-8 sm:px-12 lg:col-span-7 lg:px-16 lg:py-12 xl:col-span-6"
           >
+            
             <div className="max-w-xl lg:max-w-3xl">
               <h1 className="mt-6 text-2xl font-bold text-gray-900 dark:text-white sm:text-3xl md:text-4xl">
                 Register a User
@@ -187,13 +190,19 @@ const SignOut: NextPage = () => {
                   )}
                 </div>
 
-                <div className="col-span-6 sm:flex sm:items-center sm:gap-4">
+                <div className="col-span-6 justify-between flex items-center gap-4">
                   <button
                     type="submit"
                     className="inline-block shrink-0 rounded-md border border-blue-600 bg-blue-600 px-12 py-3 text-sm font-medium text-white transition hover:bg-transparent hover:text-blue-600 focus:outline-none focus:ring active:text-blue-500 dark:hover:bg-blue-700 dark:hover:text-white"
                   >
                     Register User
                   </button>
+                  <Link href="/dashboard">
+        <p className="flex w-20 cursor-pointer space-x-1 font-medium text-blue-600 hover:text-blue-800">
+          <UpArrow className="-rotate-90 hover:scale-100" />
+          <span>Back</span>
+        </p>
+      </Link>
                 </div>
               </form>
             </div>

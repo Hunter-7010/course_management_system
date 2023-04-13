@@ -1,5 +1,5 @@
 import { NextPage } from "next";
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { useRouter } from "next/router";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -10,18 +10,20 @@ import { toast } from "react-hot-toast";
 import Link from "next/link";
 
 import UpArrow from "~/components/svgs/upArrow.svg";
-import { courseFormSchema } from "~/schema/course.schema";
+import { courseEditFormSchema } from "~/schema/course.schema";
+import { CourseType } from "~/types/dashboard.type";
 
-const AddCourse: NextPage = () => {
-  type courseFormSchemaType = z.infer<typeof courseFormSchema>;
+const EditCourse: NextPage = () => {
+  type courseEditFormSchemaType = z.infer<typeof courseEditFormSchema>;
   const {
     register,
     handleSubmit,
     setValue,
     control,
+    reset,
     formState: { errors, isSubmitSuccessful },
-  } = useForm<courseFormSchemaType>({
-    resolver: zodResolver(courseFormSchema),
+  } = useForm<courseEditFormSchemaType>({
+    resolver: zodResolver(courseEditFormSchema),
   });
   const {
     fields: descriptionFields,
@@ -44,9 +46,10 @@ const AddCourse: NextPage = () => {
   });
 
   const router = useRouter();
+  const param = router.query.id as string;
   const formRef = useRef<HTMLFormElement>(null);
 
-  const { mutateAsync: createCourse } = api.dashboard.createCourse.useMutation({
+  const { mutateAsync: editCourse } = api.dashboard.editCourse.useMutation({
     onSuccess: () => {
       void router.push("/dashboard");
     },
@@ -85,7 +88,7 @@ const AddCourse: NextPage = () => {
    * @description Triggers when the main form is submitted
    */
 
-  const formSubmitHandler: SubmitHandler<courseFormSchemaType> = (
+  const formSubmitHandler: SubmitHandler<courseEditFormSchemaType> = (
     dataToSend
   ) => {
     const form = formRef.current!;
@@ -137,10 +140,10 @@ const AddCourse: NextPage = () => {
         setUploadData(data.secure_url);
         console.log(payload);
         void toast.promise(
-          createCourse(payload),
+          editCourse(payload),
           {
-            loading: "...Saving Course",
-            success: "Course saved successfully!",
+            loading: "...Editing Course",
+            success: "Course Saved Successfully!",
             error: "Something went wrong!",
           },
           {
@@ -184,6 +187,36 @@ const AddCourse: NextPage = () => {
     thingToLearnSwap(index, index + 1);
   };
 
+  //getting data
+  const { data: courseData, isSuccess: courseDataSuccess } =
+    api.dashboard.getCourseById.useQuery(
+      { id: param },
+      {
+        refetchOnWindowFocus: false,
+      }
+    );
+  useEffect(() => {
+    if (courseData && courseDataSuccess) {
+      reset({
+        id: courseData.id,
+        title: courseData.title,
+        header: courseData.header,
+        price: courseData.price || 0,
+        image: courseData.image,
+        language: courseData.language,
+        type: courseData.type || "",
+        isNew: courseData.isNew || false,
+        isForSale: courseData.isForSale || false,
+        categories: courseData.categories || "",
+        thingToLearn:
+          (courseData.thingToLearn as CourseType["thingToLearn"]) || [],
+        descriptions:
+          (courseData.description as CourseType["description"]) || [],
+      });
+      setImageSrc(courseData?.image);
+    }
+  }, [courseDataSuccess]);
+
   //animation
   const [descriptionAnimationParent] = useAutoAnimate<HTMLDivElement>();
   const [thingToLearnanimationParent] = useAutoAnimate<HTMLDivElement>();
@@ -202,6 +235,7 @@ const AddCourse: NextPage = () => {
         onSubmit={handleSubmit(formSubmitHandler)}
       >
         <div className="w-full ">
+          <input className="hidden" {...register("id")} defaultValue={param} />
           <div className="grid gap-4 sm:grid-cols-2 sm:gap-6">
             <div className="sm:col-span-2">
               <label className="mb-2 block text-sm font-medium text-gray-900 dark:text-white">
@@ -492,7 +526,9 @@ const AddCourse: NextPage = () => {
           <div className="flex w-full justify-end">
             <button
               type="submit"
-              className={`mt-4 inline-flex items-center rounded-lg bg-blue-700 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-blue-800 focus:ring-4 focus:ring-indigo-200 disabled:opacity-50 dark:focus:ring-blue-900 sm:mt-6 ${isSubmitSuccessful?"cursor-wait":""}`}
+              className={`mt-4 inline-flex items-center rounded-lg bg-blue-700 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-blue-800 focus:ring-4 focus:ring-indigo-200 disabled:opacity-50 dark:focus:ring-blue-900 sm:mt-6 ${
+                isSubmitSuccessful ? "cursor-wait" : ""
+              }`}
               disabled={isSubmitSuccessful}
             >
               Add Course
@@ -510,4 +546,4 @@ const AddCourse: NextPage = () => {
   );
 };
 
-export default AddCourse;
+export default EditCourse;

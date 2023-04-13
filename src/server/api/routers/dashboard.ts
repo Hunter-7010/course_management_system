@@ -71,6 +71,54 @@ export const dashboardRouter = createTRPCRouter({
         },
       });
     }),
+    editCourse: protectedProcedure
+    .input(
+      z.object({
+        id:z.string(),
+        title: z.string(),
+        header: z.string(),
+        price: z.number().default(0),
+        image: z.string().default(""),
+        language: z.string(),
+        type: z.string(),
+        isNew: z.boolean().optional(),
+        isForSale: z.boolean().optional(),
+        categories: z.string(),
+        thingToLearn: z.array(z.object({ str: z.string() })),
+        descriptions: z.array(
+          z.object({
+            h1: z.string(),
+            paragraph: z.string(),
+          })
+        ),
+      })
+    )
+    .mutation(async ({ ctx, input }) => {
+      const now = new Date();
+      return await ctx.prisma.courses.update({
+        where:{
+          id:input.id
+        },
+        data: {
+          author: ctx.session.user.image as string,
+          title: input.title,
+          authorName: ctx.session.user.name as string,
+          header: input.header,
+          description: input.descriptions,
+          price: input.price,
+          image: input.image,
+          language: input.language,
+          type: input.type,
+          isNew: input.isNew,
+          isForSale: input.isForSale,
+          categories: input.categories,
+          activity: `Edited by ${
+            ctx.session.user.name as string
+          } at ${now.toDateString()}`,
+          thingToLearn: input.thingToLearn,
+        },
+      });
+    }),
   deleteCourse: protectedProcedure
     .input(
       z.object({

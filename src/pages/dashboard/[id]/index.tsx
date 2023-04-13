@@ -57,13 +57,12 @@ const Show: NextPage = () => {
   //   }
   return (
     <section>
-        <Link href="/dashboard">
-      <p className="mx-24 flex w-20 cursor-pointer space-x-1 pt-4 font-medium text-blue-600 hover:text-blue-800">
-        <UpArrow className="-rotate-90 hover:scale-100" />
-        <span>Back</span>
-      </p>
-
-        </Link>
+      <Link href="/dashboard">
+        <p className="mx-24 flex w-20 cursor-pointer space-x-1 pt-4 font-medium text-blue-600 hover:text-blue-800">
+          <UpArrow className="-rotate-90 hover:scale-100" />
+          <span>Back</span>
+        </p>
+      </Link>
 
       <div className="mx-auto max-w-screen-xl px-4 py-8">
         <div className="grid grid-cols-1 items-start gap-8 md:grid-cols-2">
