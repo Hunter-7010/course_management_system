@@ -1,6 +1,6 @@
-type Props = {}
 
-const CourseCards = (props: Props) => {
+
+const CourseCards = () => {
   return (
     <article
     className="overflow-hidden sm:mr-auto cursor-pointer w-[320px] min-h-96 rounded-lg shadow transition hover:shadow-lg dark:shadow-gray-700/25"
