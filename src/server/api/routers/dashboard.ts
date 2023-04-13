@@ -71,4 +71,15 @@ export const dashboardRouter = createTRPCRouter({
         },
       });
     }),
+  deleteCourse: protectedProcedure
+    .input(
+      z.object({
+        id: z.string(),
+      })
+    )
+    .mutation(async ({ ctx, input }) => {
+      return await ctx.prisma.courses.delete({where:{
+        id: input.id,
+      }})
+    }),
 });
