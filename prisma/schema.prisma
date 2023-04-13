@@ -36,11 +36,3 @@ model Courses {
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
 }
-
-// model Section {
-//   id           String   @id @default(auto()) @map("_id") @db.ObjectId
-//   h1           String?
-//   paragraph    String?
-//   courseId     String  @db.ObjectId
-//   description  Courses  @relation(fields: [courseId], references: [id])
-// }
