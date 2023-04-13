@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useSession } from "next-auth/react";
 import { toast } from "react-hot-toast";
 import DeleteConfirmation from "~/components/deleteConfirmation";
-// import OneCampLoading from "~/components/oneCampLoading";
+import LoadingCourse from "~/components/loadingCourse";
 
 import Description from "~/components/description";
 import ThingToLearn from "~/components/thingToLearn";
@@ -52,9 +52,9 @@ const Show: NextPage = () => {
     );
   };
 
-  //   if (isLoading) {
-  //    return <OneCampLoading />;
-  //   }
+  if (isLoading) {
+    return <LoadingCourse />;
+  }
   return (
     <section>
       <Link href="/dashboard">
