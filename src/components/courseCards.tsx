@@ -28,7 +28,7 @@ const CourseCards = ({ course }: Props) => {
         </time>
 
         <a href="#">
-          <h3 className="mt-0.5 text-lg font-bold text-gray-900 dark:text-white">
+          <h3 className="mt-0.5 text-lg line-clamp-1 font-bold text-gray-900 dark:text-white">
             {course.title}
           </h3>
         </a>

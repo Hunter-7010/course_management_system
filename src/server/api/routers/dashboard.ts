@@ -11,6 +11,7 @@ export const dashboardRouter = createTRPCRouter({
       where: {
         author: ctx.session.user.image || "",
       },
+      orderBy:{createdAt:"desc"}
     });
   }),
   getCourseById: protectedProcedure
