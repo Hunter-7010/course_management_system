@@ -98,7 +98,7 @@ const Home: NextPage = () => {
             <div className="flex space-x-4 pr-10">
               <Link href="/dashboard/new">
                 <button className="hidden items-center justify-center rounded-l-full rounded-r-full bg-blue-500 px-6 py-2.5 text-white duration-300 hover:opacity-70 md:flex">
-                  + Add New Task
+                  + Add New Course
                 </button>
                 <button className="flex h-10 w-10 items-center justify-center rounded-full bg-blue-500 text-white duration-300 hover:opacity-70 md:hidden">
                   +

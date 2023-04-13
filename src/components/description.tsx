@@ -5,7 +5,7 @@ type Props = {
 
 const Description = ({description}: Props) => {
   return (
-    <div className="mt-2 p-8 border">
+    <div className="mt-2 p-8">
         <h1 className="font-bold text-2xl my-8">
             Description:
         </h1>

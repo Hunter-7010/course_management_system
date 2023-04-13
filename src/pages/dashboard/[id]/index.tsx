@@ -55,9 +55,9 @@ const Show: NextPage = () => {
   //    return <OneCampLoading />;
   //   }
   return (
-    <div className="">
+
       <section>
-        <div className="relative mx-auto max-w-screen-xl px-4 py-8">
+        <div className="mx-auto max-w-screen-xl px-4 py-8">
           <div className="grid grid-cols-1 items-start gap-8 md:grid-cols-2">
             <div className="grid grid-cols-1 gap-4">
               <img
@@ -122,7 +122,7 @@ const Show: NextPage = () => {
           />
         </div>
       </section>
-    </div>
+
   );
 };
 
