@@ -11,7 +11,7 @@ export const authRouter = createTRPCRouter({
   getSecretMessage: protectedProcedure.query(() => {
     return "You are logged in and can see this secret message!";
   }),
-  registerUser: publicProcedure
+  registerUser: publicProcedure // should be protectedProcedure!
     .input(
       z.object({
         username: z.string(),
