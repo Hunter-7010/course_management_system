@@ -6,7 +6,7 @@ type Props = {
 
 const ThingToLearn = ({ thingsToLearn }: Props) => {
   return (
-    <div className="mt-8 rounded-2xl border p-8 shadow-lg">
+    <div className="mt-8 rounded-2xl border p-8 shadow-lg dark:shadow-gray-700/25 ">
       <h1 className="text-2xl font-bold">What you will learn:</h1>
       <div className="container mt-8 flex flex-wrap">
         {(thingsToLearn || []).map((thingsToLearn, ind) => (

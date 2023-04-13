@@ -7,6 +7,7 @@ import { useRouter } from "next/router";
 import { api } from "~/utils/api";
 
 import CourseCards from "~/components/courseCards";
+import DarkMode from "~/components/darkMode";
 
 const Home: NextPage = () => {
   const { data: sessionData, status } = useSession();
@@ -32,7 +33,9 @@ const Home: NextPage = () => {
             Course Managment
           </div>
           <div className="flex h-[41.2rem] w-full flex-col  text-gray-400 antialiased">
-            <h2 className="p-5 text-sm font-semibold tracking-widest"></h2>
+            <h2 className="py-5 flex w-full justify-center pr-5 text-sm font-semibold tracking-widest">
+              <DarkMode/>
+            </h2>
             <div className="relative gap-y-12 overflow-y-auto pr-6">
               <Link href="/dashboard">
                 <h3

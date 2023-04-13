@@ -19,7 +19,7 @@ const CourseCards = ({ course }: Props) => {
         className="h-44 w-full object-cover"
       />
 
-      <div className="bg-white p-4 dark:bg-gray-900 sm:p-6">
+      <div className="p-4 dark:bg-gray-900 sm:p-6">
         <time
           dateTime="2022-10-10"
           className="block text-xs text-gray-500 dark:text-gray-400"
