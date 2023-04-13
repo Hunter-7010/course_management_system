@@ -327,7 +327,7 @@ const EditCourse: NextPage = () => {
             </div>
             <div>
               <label className="mb-2 block text-sm font-medium text-gray-900 dark:text-white">
-                Type
+               Language
               </label>
               <input
                 type="text"

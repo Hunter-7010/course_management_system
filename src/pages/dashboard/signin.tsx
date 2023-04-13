@@ -62,7 +62,7 @@ const SignIn: NextPage = () => {
           <section className="relative flex h-80 items-end bg-gray-900 lg:col-span-5 lg:h-full xl:col-span-6">
             <img
               alt="Night"
-              src="https://images.unsplash.com/photo-1617195737496-bc30194e3a19?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80"
+              src="https://images.unsplash.com/photo-1589149098258-3e9102cd63d3?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1339&q=80"
               className="absolute inset-0 h-full w-full object-cover opacity-80"
             />
 
@@ -83,7 +83,7 @@ const SignIn: NextPage = () => {
               </Link>
 
               <h2 className="mt-6 text-2xl font-bold text-white sm:text-3xl md:text-4xl">
-                Welcome to Squid 🦑
+                Welcome to Course Management
               </h2>
               {sessionData?.user && (
                 <h2 className="mt-6 text-2xl font-bold text-white sm:text-3xl md:text-4xl">
@@ -91,8 +91,7 @@ const SignIn: NextPage = () => {
                 </h2>
               )}
               <p className="mt-4 leading-relaxed text-white/90">
-                Lorem, ipsum dolor sit amet consectetur adipisicing elit.
-                Eligendi nam dolorum aliquam, quibusdam aperiam voluptatum.
+                Please enter the default password provide to view the app
               </p>
             </div>
           </section>
@@ -114,7 +113,7 @@ const SignIn: NextPage = () => {
                     htmlFor="username"
                     className="block text-sm font-medium text-gray-700 dark:text-gray-200"
                   >
-                    username
+                    username: (admin)
                   </label>
 
                   <input
@@ -134,7 +133,7 @@ const SignIn: NextPage = () => {
                     htmlFor="password"
                     className="block text-sm font-medium text-gray-700 dark:text-gray-200"
                   >
-                    password
+                    password: (nimda)
                   </label>
 
                   <input
