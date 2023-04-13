@@ -54,9 +54,9 @@ const EditCourse: NextPage = () => {
     },
   });
 
-  const [imageSrc, setImageSrc] = useState<string | null>(null);
+  const [imageSrc, setImageSrc] = useState<string>("");
   const [uploadData, setUploadData] = useState<string>();
-
+console.log("image",imageSrc)
   /**
    * handleOnChange
    * @description Triggers when the file input changes (ex: when a file is selected)
@@ -133,7 +133,7 @@ const EditCourse: NextPage = () => {
     );
     data
       .then((data) => {
-        const payload = { ...dataToSend, image: data.secure_url };
+        const payload = { ...dataToSend, image: imageSrc };
         // setValue("image", data.secure_url);
         setImageSrc(data.secure_url);
         setUploadData(data.secure_url);
@@ -212,7 +212,7 @@ const EditCourse: NextPage = () => {
         descriptions:
           (courseData.description as CourseType["description"]) || [],
       });
-      setImageSrc(courseData?.image);
+      setImageSrc(courseData.image);
     }
   }, [courseDataSuccess]);
 
@@ -342,7 +342,7 @@ const EditCourse: NextPage = () => {
               )}
             </div>
             <div className="group relative mt-4 flex h-10 w-44 cursor-pointer items-center justify-center">
-              <input className="hidden" {...register("image")} />
+              <input className="hidden" {...register("image")} value={imageSrc ||""} />
               <label className="mb-4 mt-4 flex h-full w-full cursor-pointer items-center justify-center rounded-md border border-gray-700 bg-gray-500 px-6 text-lg text-gray-200 duration-300 group-hover:bg-gray-200 group-hover:text-gray-900">
                 Insert An Image
               </label>
@@ -530,7 +530,7 @@ const EditCourse: NextPage = () => {
               }`}
               disabled={isSubmitSuccessful}
             >
-              Add Course
+              Edit Course
             </button>
           </div>
         </div>

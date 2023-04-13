@@ -17,8 +17,8 @@ npm install
 - Copy the enivroment varible provided in .env.example to your .evv file.
 - Copy your atlas connection string to DATABASE_URL in your .env file
 - remove the below line of code to enable you to go to register page
-```
-// Located at src/pages/dashboard/register
+```typescript
+// Located at src/pages/dashboard/register.tsx
  if (status === "unauthenticated") {
     void router.push("/dashboard/signin");
   }
