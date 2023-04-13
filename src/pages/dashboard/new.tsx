@@ -6,27 +6,12 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm, SubmitHandler, useFieldArray } from "react-hook-form";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
 import { api } from "~/utils/api";
+import { toast } from "react-hot-toast";
+
 import UpArrow from "~/components/svgs/upArrow.svg";
+import { courseFormSchema } from "~/schema/course.schema";
 
 const AddItems: NextPage = () => {
-  const courseFormSchema = z.object({
-    title: z.string(),
-    header: z.string(),
-    price: z.number().default(0),
-    image: z.string().default(""),
-    language: z.string(),
-    type: z.string().optional(),
-    isNew: z.boolean().optional(),
-    isForSale: z.boolean().optional(),
-    categories: z.string().optional(),
-    thingToLearn: z.array(z.object({ str: z.string() })).optional(),
-    descriptions: z.array(
-      z.object({
-        h1: z.string(),
-        paragraph: z.string(),
-      })
-    ),
-  });
   type courseFormSchemaType = z.infer<typeof courseFormSchema>;
   const {
     register,
@@ -60,7 +45,8 @@ const AddItems: NextPage = () => {
   const router = useRouter();
   const formRef = useRef<HTMLFormElement>(null);
 
-  //   const { mutate } = trpc.webPage.createItem.useMutation();
+  const { mutateAsync: createCourse } =
+    api.dashboard.createCourse.useMutation();
 
   const [imageSrc, setImageSrc] = useState<string | null>(null);
   const [uploadData, setUploadData] = useState<string>();
@@ -95,41 +81,77 @@ const AddItems: NextPage = () => {
    * @description Triggers when the main form is submitted
    */
 
-  const formSubmitHandler: SubmitHandler<courseFormSchemaType> = async (
+  const formSubmitHandler: SubmitHandler<courseFormSchemaType> = (
     dataToSend
   ) => {
-    // const form = formRef.current!;
-    // const fileInput = Array.from(form.elements).find(
-    //   (el: any) => el.name === "file"
-    // ) as HTMLInputElement;
+    const form = formRef.current!;
+    const fileInput = Array.from(
+      form.elements as unknown as HTMLInputElement[]
+    ).find((el) => el.name === "file") as HTMLInputElement;
 
-    // const formData = new FormData();
+    const formData = new FormData();
 
-    // const file = Array.from(fileInput.files!)[0];
-    // formData.append("file", file!);
+    const file = Array.from(fileInput.files!)[0];
+    formData.append("file", file!);
 
-    // formData.append("upload_preset", "my-uploads");
+    formData.append("upload_preset", "my-uploads");
 
-    // const data = await fetch(
-    //   "https://api.cloudinary.com/v1_1/dddvtrxcz/image/upload",
-    //   {
-    //     method: "POST",
-    //     body: formData,
-    //   }
-    // )
-    //   .then((r) => r.json())
-    //   .then((data) => {
-    //     return {
-    //       secure_url: data.secure_url,
-    //     };
-    //   });
-    // const payload = { ...dataToSend, image: data.secure_url as string };
-    // // setValue("image", data.secure_url);
-    // setImageSrc(data.secure_url);
-    // setUploadData(data.secure_url);
-    // console.log(payload);
-    // mutate(payload);
-    console.log(dataToSend);
+    const data = fetch(
+      "https://api.cloudinary.com/v1_1/dddvtrxcz/image/upload",
+      {
+        method: "POST",
+        body: formData,
+      }
+    )
+      .then((r) => r.json())
+      .then((data: { secure_url: string }) => {
+        return {
+          secure_url: data.secure_url,
+        };
+      });
+    void toast.promise(
+      data,
+      {
+        loading: "...Saving Image",
+        success: "Image saved successfully!",
+        error: "Cant upload image!",
+      },
+      {
+        style: {
+          minWidth: "250px",
+        },
+        success: {
+          duration: 2000,
+        },
+      }
+    );
+    data
+      .then((data) => {
+        const payload = { ...dataToSend, image: data.secure_url };
+        // setValue("image", data.secure_url);
+        setImageSrc(data.secure_url);
+        setUploadData(data.secure_url);
+        console.log(payload);
+        void toast.promise(
+          createCourse(payload),
+          {
+            loading: "...Saving Course",
+            success: "Course saved successfully!",
+            error: "Something went wrong!",
+          },
+          {
+            style: {
+              minWidth: "250px",
+            },
+            success: {
+              duration: 2000,
+            },
+          }
+        );
+      })
+      .catch(() => {
+        void toast.error("Something went wrong");
+      });
   };
 
   //react hook form
@@ -160,13 +182,13 @@ const AddItems: NextPage = () => {
 
   //animation
   const [descriptionAnimationParent] = useAutoAnimate<HTMLDivElement>();
-  const [animationParentUnit] = useAutoAnimate<HTMLDivElement>();
+  const [thingToLearnanimationParent] = useAutoAnimate<HTMLDivElement>();
   return (
     <div className="p-4 dark:bg-gray-900">
       <form
-        method="post"
         className="flex flex-col-reverse "
         ref={formRef}
+        //   eslint-disable-next-line
         onSubmit={handleSubmit(formSubmitHandler)}
       >
         <div className="w-full ">
@@ -292,7 +314,9 @@ const AddItems: NextPage = () => {
               ref={descriptionAnimationParent}
               className="space-y-6 sm:col-span-2"
             >
-              <h1 className="mb-2 block px-4 text-md font-bold text-gray-900 dark:text-white">Description:</h1>
+              <h1 className="text-md mb-2 block px-4 font-bold text-gray-900 dark:text-white">
+                Description:
+              </h1>
               {descriptionFields.map((desc, ind) => (
                 <div
                   key={desc.id}
@@ -382,10 +406,12 @@ const AddItems: NextPage = () => {
               </button>
             </div>
             <div
-              ref={descriptionAnimationParent}
+              ref={thingToLearnanimationParent}
               className="space-y-6 sm:col-span-2"
             >
-              <h1 className="mb-2 block px-4 text-md font-bold text-gray-900 dark:text-white">Things To Learn:</h1>
+              <h1 className="text-md mb-2 block px-4 font-bold text-gray-900 dark:text-white">
+                Things To Learn:
+              </h1>
               {thingToLearnFields.map((thing, ind) => (
                 <div
                   key={thing.id}
@@ -432,7 +458,6 @@ const AddItems: NextPage = () => {
                           </p>
                         )}
                     </div>
-                 
                   </div>
                   <div className="flex w-full justify-end">
                     <button
@@ -471,7 +496,6 @@ const AddItems: NextPage = () => {
           />
         </div>
       </form>
-      {/* <pre>{JSON.stringify(description, null, 2)}</pre> */}
     </div>
   );
 };
