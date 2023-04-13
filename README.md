@@ -9,5 +9,18 @@
 - [tRPC](https://trpc.io)
 
 ## How to Run it Locally
-- Create an
-
+- install the dependencies 
+```
+npm install
+```
+- Create an .env file.
+- Copy the enivroment varible provided in .env.example to your .evv file.
+- Copy your atlas connection string to DATABASE_URL in your .env file
+- remove the below line of code to enable you to go to register page
+```
+// Located at src/pages/dashboard/register
+ if (status === "unauthenticated") {
+    void router.push("/dashboard/signin");
+  }
+```
+- now visit (baseurl)/dashboard/register and register a user
