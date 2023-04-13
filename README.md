@@ -19,7 +19,7 @@ password: nimda
 npm install
 ```
 - Create an .env file.
-- Copy the enivroment varible provided in .env.example to your .evv file.
+- Copy the enivroment varible provided in .env.example to your .env file.
 - Copy your atlas connection string to DATABASE_URL in your .env file
 - remove the below line of code to enable you to go to register page
 ```typescript
