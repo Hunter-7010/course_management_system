@@ -1,10 +1,12 @@
 import { Courses } from "@prisma/client";
+import Link from "next/link";
 type Props = {
   course: Courses;
 };
 
 const CourseCards = ({ course }: Props) => {
   return (
+    <Link href={`/dashboard/${course.id}`}>
     <article className="relative h-96 w-[320px] cursor-pointer overflow-hidden rounded-lg shadow transition hover:shadow-lg dark:shadow-gray-700/25 sm:mr-auto">
       <img
         alt={course.title}
@@ -44,6 +46,7 @@ const CourseCards = ({ course }: Props) => {
         <p className="font-bold">${course.price}</p>
       </div>
     </article>
+    </Link>
   );
 };
 

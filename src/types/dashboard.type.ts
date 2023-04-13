@@ -7,7 +7,7 @@ export type CourseType = {
   description: {
     h1: string;
     paragraph: string;
-  };
+  }[];
   price: number;
   image: string;
   language: string;

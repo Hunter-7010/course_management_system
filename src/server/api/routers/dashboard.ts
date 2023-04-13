@@ -14,6 +14,19 @@ export const dashboardRouter = createTRPCRouter({
       },
     });
   }),
+  getCourseById: protectedProcedure
+    .input(
+      z.object({
+        id: z.string(),
+      })
+    )
+    .query(async ({ ctx, input }) => {
+      return await ctx.prisma.courses.findUnique({
+        where: {
+          id: input.id,
+        },
+      });
+    }),
   createCourse: protectedProcedure
     .input(
       z.object({
