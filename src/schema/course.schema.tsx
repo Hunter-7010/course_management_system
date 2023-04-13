@@ -37,3 +37,12 @@ export const courseFormSchema = z.object({
       })
     ),
   });
+  export   const userFormSchema = z.object({
+    username: z
+      .string()
+      .min(1, { message: "Must be 1 or more characters long!" }),
+    password: z
+      .string()
+      .min(1, { message: "Must be 1 or more characters long!" }),
+    role: z.string(),
+  });

@@ -7,7 +7,6 @@ import {
 import CredentialsProvider from "next-auth/providers/credentials";
 import bcrypt from "bcryptjs";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
-// import { env } from "~/env.mjs";
 import { prisma } from "~/server/db";
 
 /**
@@ -65,10 +64,7 @@ export const authOptions: NextAuthOptions = {
           password: string;
         };
       
-        // const isPasswordCorrectUser = await bcrypt.compare(
-        //   password,
-        //   user?.password ? user?.password : ""
-        // );
+        
         const isPasswordCorrectUser = user && await bcrypt.compare( //eslint-disable-line
           password,
           user.password

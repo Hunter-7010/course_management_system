@@ -17,7 +17,6 @@ const AddCourse: NextPage = () => {
   const {
     register,
     handleSubmit,
-    setValue,
     control,
     formState: { errors, isSubmitSuccessful },
   } = useForm<courseFormSchemaType>({

@@ -11,7 +11,7 @@ import DarkMode from "~/components/darkMode";
 import LoadingAllCourses from "~/components/loadingAllCourses";
 import SideBar from "~/components/sideBar";
 const Home: NextPage = () => {
-  const { data: sessionData, status } = useSession();
+  const {status } = useSession();
   const router = useRouter();
   if (status === "unauthenticated") {
     void router.push("/dashboard/signin");
@@ -104,7 +104,7 @@ const Home: NextPage = () => {
         <div className="flex grow flex-col overflow-y-auto">
           <div className="flex min-h-[96px] items-center justify-between border-b dark:border-gray-700">
             <h1 className="w-1/2 truncate pl-14 text-2xl font-bold text-gray-900  antialiased dark:text-white md:pl-10">
-              {/* {oneBoardData.title} */}
+
             </h1>
             <div className="flex space-x-4 pr-10">
               <div
@@ -125,9 +125,7 @@ const Home: NextPage = () => {
                   +
                 </button>
               </Link>
-              <div className="flex items-center justify-center">
-                {/* <BoardOptionsDropdown boardId={boardId} /> */}
-              </div>
+              
             </div>
           </div>
           {isLoading ? (

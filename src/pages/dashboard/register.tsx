@@ -14,22 +14,16 @@ import UpArrow from "~/components/svgs/upArrow.svg";
 import { api } from "~/utils/api";
 
 import RoleListBox from "~/components/roleListBox";
+import { userFormSchema } from "~/schema/course.schema";
 
 const SignOut: NextPage = () => {
   const { status } = useSession();
   const router = useRouter();
+
   if (status === "unauthenticated") {
     void router.push("/dashboard/signin");
   }
-  const userFormSchema = z.object({
-    username: z
-      .string()
-      .min(1, { message: "Must be 1 or more characters long!" }),
-    password: z
-      .string()
-      .min(1, { message: "Must be 1 or more characters long!" }),
-    role: z.string(),
-  });
+  
   type userFormSchemaType = z.infer<typeof userFormSchema>;
   const {
     register,
@@ -175,7 +169,7 @@ const SignOut: NextPage = () => {
                 </div>
 
                 <div className="col-span-6">
-                <label
+                  <label
                     htmlFor="role"
                     className="block text-sm font-medium text-gray-700 dark:text-gray-200"
                   >

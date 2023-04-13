@@ -18,7 +18,6 @@ const EditCourse: NextPage = () => {
   const {
     register,
     handleSubmit,
-    setValue,
     control,
     reset,
     formState: { errors, isSubmitSuccessful },
