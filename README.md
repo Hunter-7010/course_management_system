@@ -1,5 +1,5 @@
 # [Course Management System](https://coursemanagementsystem.vercel.app/)
--Defauld password is:
+-Default password is:
 username: admin
 password: nimda
 
