@@ -223,10 +223,10 @@ const EditCourse: NextPage = () => {
   return (
     <div className="p-4 dark:bg-gray-900">
       <Link href="/dashboard">
-        <p className="mx-24 flex w-20 cursor-pointer space-x-1 pt-4 font-medium text-blue-600 hover:text-blue-800">
+        <div className="mx-24 flex w-20 cursor-pointer space-x-1 pt-4 font-medium text-blue-600 hover:text-blue-800">
           <UpArrow className="-rotate-90 hover:scale-100" />
           <span>Back</span>
-        </p>
+        </div>
       </Link>
       <form
         className="flex flex-col-reverse "

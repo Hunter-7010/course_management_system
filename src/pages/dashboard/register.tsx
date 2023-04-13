@@ -198,10 +198,10 @@ const SignOut: NextPage = () => {
                     Register User
                   </button>
                   <Link href="/dashboard">
-        <p className="flex w-20 cursor-pointer space-x-1 font-medium text-blue-600 hover:text-blue-800">
+        <div className="flex w-20 cursor-pointer space-x-1 font-medium text-blue-600 hover:text-blue-800">
           <UpArrow className="-rotate-90 hover:scale-100" />
           <span>Back</span>
-        </p>
+        </div>
       </Link>
                 </div>
               </form>

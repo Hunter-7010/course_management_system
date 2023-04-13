@@ -15,7 +15,8 @@ const ThingToLearn = ({ thingsToLearn }: Props) => {
             className="mb-4 flex w-full items-center space-x-2 sm:w-1/2"
           >
             <Tick className="h-6 w-6 stroke-green-400" />
-            <p className="text-md break-words"> {thingsToLearn.str}</p>
+            
+            <p className="text-md w-[90%] break-words"> {thingsToLearn.str}</p>
           </div>
         ))}
       </div>

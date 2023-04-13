@@ -41,7 +41,7 @@ const CourseCards = ({ course }: Props) => {
         <p className="text-sm">
           {" "}
           <span className="text-gray-700">By </span>{" "}
-          <span className="font-bold">{course.authorName} ss</span>{" "}
+          <span className="font-bold">{course.authorName}</span>{" "}
         </p>
         <p className="font-bold">${course.price}</p>
       </div>

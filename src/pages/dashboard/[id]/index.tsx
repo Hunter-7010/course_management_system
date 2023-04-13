@@ -58,10 +58,10 @@ const Show: NextPage = () => {
   return (
     <section>
       <Link href="/dashboard">
-        <p className="mx-24 flex w-20 cursor-pointer space-x-1 pt-4 font-medium text-blue-600 hover:text-blue-800">
+        <div className="mx-24 flex w-20 cursor-pointer space-x-1 pt-4 font-medium text-blue-600 hover:text-blue-800">
           <UpArrow className="-rotate-90 hover:scale-100" />
           <span>Back</span>
-        </p>
+        </div>
       </Link>
 
       <div className="mx-auto max-w-screen-xl px-4 py-8">
@@ -73,7 +73,7 @@ const Show: NextPage = () => {
               onError={({ currentTarget }) => {
                 currentTarget.onerror = null; // prevents looping
                 currentTarget.src =
-                  "https://images.unsplash.com/photo-1487730116645-74489c95b41b?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80";
+                  "https://images.unsplash.com/photo-1488190211105-8b0e65b80b4e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80";
               }}
               className="aspect-square w-full rounded-xl object-cover"
             />
