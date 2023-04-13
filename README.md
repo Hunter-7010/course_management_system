@@ -1,4 +1,7 @@
 # [Course Management System](https://coursemanagementsystem.vercel.app/)
+-Defauld password is:
+username: admin
+password: nimda
 
 ![dashboard](https://res.cloudinary.com/dddvtrxcz/image/upload/v1681419198/samples/ecommerce/Screen_Shot_2023-04-13_at_11.52.45_PM_etj8fu.png)
 
