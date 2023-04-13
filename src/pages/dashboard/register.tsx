@@ -121,7 +121,7 @@ const SignOut: NextPage = () => {
               <form
                 //   eslint-disable-next-line
                 onSubmit={handleSubmit(formSubmitHandler)}
-                className="mt-8 grid w-96 grid-cols-6 gap-6"
+                className="mt-8 grid md:w-96 grid-cols-6 gap-6"
               >
                 <div ref={usernameErrorParent} className="col-span-6">
                   <label

@@ -106,14 +106,14 @@ const Home: NextPage = () => {
             <h1 className="w-1/2 truncate pl-14 text-2xl font-bold text-gray-900  antialiased dark:text-white md:pl-10">
 
             </h1>
-            <div className="flex space-x-4 pr-10">
+            <div className="flex w-full space-x-4 pr-10">
               <div
                 className="group relative cursor-pointer inline-block justify-center overflow-hidden rounded-full border border-blue-600 px-5 py-2 focus:outline-none focus:ring"
                 onClick={() => void signOut()}
               >
                 <span className="absolute inset-x-0 bottom-0 h-[2px] bg-blue-600 transition-all group-hover:h-full group-active:bg-blue-500"></span>
 
-                <span className="relative w-full text-sm font-medium text-blue-600 transition-colors group-hover:text-white">
+                <span className="relative text-xs font-medium text-blue-600 transition-colors group-hover:text-white">
                   Sign Out
                 </span>
               </div>

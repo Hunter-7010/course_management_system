@@ -106,7 +106,7 @@ const SignIn: NextPage = () => {
               </h1>
               <form
                 onSubmit={handleSubmit}
-                className="mt-8 grid w-96 grid-cols-6 gap-6"
+                className="mt-8 grid w-80 md:w-96 grid-cols-6 gap-6"
               >
                 <div className="col-span-6">
                   <label
