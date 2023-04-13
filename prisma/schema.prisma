@@ -21,6 +21,7 @@ model Courses {
   id           String   @id @default(auto()) @map("_id") @db.ObjectId
   title        String
   author       String   @db.ObjectId
+  authorName   String?
   header       String
   description  Json[]
   price        Float?
@@ -31,7 +32,7 @@ model Courses {
   isForSale    Boolean? @default(false)
   categories   String?  @default("")
   activity     String[]
-  thingToLearn String[]
+  thingToLearn Json[]
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
 }

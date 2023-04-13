@@ -43,8 +43,8 @@ const SignIn: NextPage = () => {
         },
         success: {
           duration: 3000,
+          icon: <Info />,
         },
-        icon: <Info />,
       }
     );
   };

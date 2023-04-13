@@ -6,7 +6,14 @@ import { TRPCError } from "@trpc/server";
 export const dashboardRouter = createTRPCRouter({
   getSession: protectedProcedure.query(({ ctx }) => {
     return ctx.session;
-  }), 
+  }),
+  getAllCourses: protectedProcedure.query(async ({ ctx }) => {
+    return await ctx.prisma.courses.findMany({
+      where: {
+        author: ctx.session.user.image || "",
+      },
+    });
+  }),
   createCourse: protectedProcedure
     .input(
       z.object({
@@ -29,10 +36,12 @@ export const dashboardRouter = createTRPCRouter({
       })
     )
     .mutation(async ({ ctx, input }) => {
+      const now = new Date();
       return await ctx.prisma.courses.create({
         data: {
           author: ctx.session.user.image as string,
           title: input.title,
+          authorName: ctx.session.user.name as string,
           header: input.header,
           description: input.descriptions,
           price: input.price,
@@ -41,9 +50,11 @@ export const dashboardRouter = createTRPCRouter({
           type: input.type,
           isNew: input.isNew,
           isForSale: input.isForSale,
-          categories: input.title,
-          activity: input.title,
-          thingToLearn: input.title,
+          categories: input.categories,
+          activity: `Created by ${
+            ctx.session.user.name as string
+          } at ${now.toDateString()}`,
+          thingToLearn: input.thingToLearn,
         },
       });
     }),
