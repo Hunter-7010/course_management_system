@@ -1,5 +1,7 @@
 # [Course Management System](https://coursemanagementsystem.vercel.app/)
 
+![dashboard](https://res.cloudinary.com/dddvtrxcz/image/upload/v1681419198/samples/ecommerce/Screen_Shot_2023-04-13_at_11.52.45_PM_etj8fu.png)
+
 ## How did I make this app?
 
 - [Next.js](https://nextjs.org)
