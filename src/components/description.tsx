@@ -4,7 +4,7 @@ type Props = {
 }
 
 const Description = ({description}: Props) => {
-  return (
+  return ( 
     <div className="mt-2 w-full">
         <h1 className="font-bold text-2xl my-8">
             Description:
